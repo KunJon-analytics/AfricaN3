@@ -35,7 +35,7 @@ export const Skills = () => {
               <h2>Community</h2>
               <p>
                 AfricaN3 plans to be the largest and most active regional N3
-                community.<br></br> These are our targets fot the next year.
+                community.<br></br> These are our targets for the next year.
               </p>
               <Carousel
                 responsive={responsive}
