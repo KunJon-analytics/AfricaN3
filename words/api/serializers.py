@@ -35,6 +35,13 @@ class WordleSerializer(serializers.ModelSerializer):
         model = Wordle
         fields = '__all__'
 
+    def create(self, validated_data):
+        words_data = validated_data.pop('words')
+        wordle = Wordle.objects.create(**validated_data)
+        for word_data in words_data:
+            Word.objects.create(wordle=wordle, **word_data)
+        return wordle
+
     def get_word(self, obj):
         word = obj.words.filter(found = False).first()
         data = WordSerializer(word).data
