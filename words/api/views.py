@@ -30,11 +30,15 @@ class WordTodayView(APIView):
 
     def get(self, request, format=None):
         """
-        Return a the word for the day.
+        Returns the word for the day.
         """
         # Use try catch block here
-        active_wordle_game = Wordle.objects.public().earliest()
-        data = WordleSerializer(active_wordle_game).data
+        try:
+            active_wordle_game = Wordle.objects.public().earliest()
+            data = WordleSerializer(active_wordle_game).data
 
-        return Response(data)
+            return Response(data, status=status.HTTP_202_ACCEPTED)
+        except Wordle.DoesNotExist:
+            bad_content = {'detail': 'There is no active Wordle game right now'}
 
+            return Response(bad_content, status=status.HTTP_204_NO_CONTENT)
