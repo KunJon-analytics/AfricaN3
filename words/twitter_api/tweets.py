@@ -22,3 +22,7 @@ for status in tweepy.Cursor(api.search_tweets, "$nudes",
     print(status.text)
     number = number + 1
     print(number)
+
+
+def create_wordle_words(wordle_pk):
+   print("Hello from a function")

@@ -46,3 +46,14 @@ class WordleSerializer(serializers.ModelSerializer):
         word = obj.words.filter(found = False).first()
         data = WordSerializer(word).data
         return data
+
+class AddWordleSerializer(serializers.ModelSerializer):
+    master = serializers.SlugRelatedField(
+        many=False,
+        read_only=True,
+        slug_field='wallet_address'
+    )
+
+    class Meta:
+        model = Wordle
+        fields = '__all__'
