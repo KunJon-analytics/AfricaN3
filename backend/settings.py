@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
 
     'users',
+    'words',
 ]
 
 MIDDLEWARE = [
@@ -180,3 +181,10 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Twitter Authentication details
+CONSUMERKEY = "sX6o9mxb4hNd3yGMOeJ2nWOIP"
+CONSUMERSECRET = "LB1cyZSvjI9pGwwsT9FGeyTnJgMtTbrAUSrZuVQJnJbOZw20WD"
+ACCESSTOKEN = "1205399139040804864-mi6xcU8e374XIqFZoo3fTtAB4uqy8n"
+ACCESSTOKENSECRET = "xharzLg3XPfYQr58h0tnlEj1p5TeabVg7TGKR1NK2tegO"
