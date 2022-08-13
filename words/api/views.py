@@ -76,6 +76,7 @@ class CreateWordle(APIView):
     def post(self, request):
         data = request.data
         words_added = data.pop("words_added")
+        searchlight = data.pop("searchlight")
         if words_added:
             serializer = WordleSerializer(data=data)
             if serializer.is_valid():
@@ -87,7 +88,7 @@ class CreateWordle(APIView):
             serializer = AddWordleSerializer(data=data)
         if serializer.is_valid():
             wordle = serializer.save()
-            create_wordle_words(wordle.pk)
+            create_wordle_words(wordle.pk, searchlight)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
