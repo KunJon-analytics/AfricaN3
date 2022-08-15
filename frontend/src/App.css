@@ -241,6 +241,9 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:before {
 nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   border-color: transparent;
 }
+nav.navbar .vvd {
+  font-size: 15px;
+}
 
 /************ Banner Css ************/
 .banner {
