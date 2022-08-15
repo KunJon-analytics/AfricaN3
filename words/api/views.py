@@ -9,12 +9,18 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, throttle_classes
 from rest_framework.exceptions import PermissionDenied
 from rest_framework import status
+from rest_framework.generics import ListAPIView
 
-from words.models import Sitting, Winner, Wordle, Word
+from words.models import Sitting, Winner, Wordle, Word, Letter
 from words.twitter_api.tweets import create_wordle_words
-from .serializers import SittingSerializer, WordleSerializer, WordSerializer, AddWordleSerializer
+from .serializers import SittingSerializer, WordleSerializer, WordSerializer, AddWordleSerializer, LetterSerializer
 from users.api.mixins import UserQuerySetMixin
 
+
+class LetterList(ListAPIView):
+    queryset = Letter.objects.all()
+    serializer_class = LetterSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 class WordTodayView(APIView):
     """

@@ -12,19 +12,19 @@ import { Skills } from "./components/Skills";
 import { Projects } from "./components/Projects";
 import { Footer } from "./components/Footer";
 import Wordle from "./components/Wordle";
+import axiosInstance from "./api/axiosInstance";
 
 function App() {
   const [solution, setSolution] = useState(null);
 
+  const [wordleData, setWordleData] = useState([]);
+
   useEffect(() => {
-    fetch("http://localhost:3001/solutions")
-      .then((res) => res.json())
-      .then((json) => {
-        // random int between 0 & 14
-        const randomSolution = json[Math.floor(Math.random() * json.length)];
-        setSolution(randomSolution.word);
-      });
-  }, [setSolution]);
+    axiosInstance.get("words/").then((res) => {
+      setWordleData(res.data);
+      setSolution(res.data.word.content);
+    });
+  }, [setWordleData]);
 
   return (
     <div className="App">

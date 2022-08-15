@@ -7,6 +7,7 @@ import Keypad from "./Keypad";
 import Modal from "./Modal";
 
 export default function Wordle({ solution }) {
+  console.log(solution);
   const { currentGuess, guesses, turn, isCorrect, usedKeys, handleKeyup } =
     useWordle(solution);
   const [showModal, setShowModal] = useState(false);

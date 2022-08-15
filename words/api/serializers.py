@@ -1,11 +1,5 @@
-from django.utils.encoding import smart_str
-from django.core.exceptions import ObjectDoesNotExist
-
 from rest_framework import serializers
-
-from users.models import CustomUser
-from words.models import Wordle, Word, Sitting, Winner
-from users.api.serializers import UserSerializer
+from words.models import Letter, Wordle, Word, Sitting, Winner
 
 class WordSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,6 +15,11 @@ class WinnerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Winner
         fields = '__all__'
+
+class LetterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Letter
+        fields = ("key",)
 
 class WordleSerializer(serializers.ModelSerializer):
     words = WordSerializer(many=True, write_only=True, required=False)

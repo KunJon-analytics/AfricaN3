@@ -1,4 +1,5 @@
 import os
+import string
 import collections
 import json
 import re
@@ -7,7 +8,7 @@ import random
 import tweepy as tw
 import nltk
 from nltk.corpus import stopwords
-from words.models import Word, Wordle
+from words.models import Letter, Word, Wordle
 
 from django.conf import settings
 
@@ -173,4 +174,13 @@ def create_wordle_words(wordle_pk, searchlight):
       complete_wordle_words(freq_words, number, wordle)
 
 
-create_wordle_words(1, "$TTM")
+alphabet_string = string.ascii_lowercase
+
+
+letters = list(alphabet_string)
+
+def create_letters():
+   for letter in letters:
+      obj, created = Letter.objects.get_or_create(key=letter)
+
+create_letters()

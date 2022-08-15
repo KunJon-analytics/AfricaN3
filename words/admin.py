@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Word, Sitting, Wordle, Winner
+from .models import Word, Sitting, Wordle, Winner, Letter
 
 # Register your models here.
 class WordleAdmin(admin.ModelAdmin):
@@ -18,3 +18,4 @@ admin.site.register(Wordle, WordleAdmin)
 admin.site.register(Word, WordAdmin)
 admin.site.register(Winner, WinnerAdmin)
 admin.site.register(Sitting)
+admin.site.register(Letter)

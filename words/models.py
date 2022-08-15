@@ -45,7 +45,8 @@ class Wordle(models.Model):
 
     no_of_words = models.PositiveIntegerField(
         default=1, verbose_name=_("Max Words"),
-        help_text=_("Number of words to be attempted for this game."))
+        help_text=_("Number of words to be attempted for this game."),
+        validators=[MaxValueValidator(7), MinValueValidator(1)])
 
     wordle_id = models.PositiveIntegerField(unique=True, verbose_name=_("Trivia ID"),
         help_text=_("Wordle identifier on the blockchain"))
@@ -77,6 +78,24 @@ class Wordle(models.Model):
         amount = self.reward / self.no_of_words
         return amount
 
+
+class Letter(models.Model):
+    """
+    Used to store english letters.
+
+    """
+    key = models.CharField(max_length=1, unique=True,
+                               blank=False,
+                               help_text=_("Enter the letter that "
+                                           "you want displayed"),
+                               verbose_name=_("Key"))
+
+    def __str__(self):
+        return self.key
+
+    class Meta:
+        verbose_name = _("Letter")
+        verbose_name_plural = _("Letters")
 
 class Word(models.Model):
     """
