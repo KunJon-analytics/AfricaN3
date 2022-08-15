@@ -2,14 +2,11 @@ import { useState, useEffect, useContext } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import logo from "../assets/img/whitelogo.png";
 import navIcon1 from "../assets/img/nav-icon1.svg";
-import navIcon2 from "../assets/img/nav-icon2.svg";
 import navIcon3 from "../assets/img/nav-icon3.svg";
-import { login, register } from "../utils/auth";
 import AuthContext from "../context/AuthContext";
 import ButtonConnect from "./ButtonConnect";
 
 export const NavBar = () => {
-  const { user } = useContext(AuthContext);
   const [activeLink, setActiveLink] = useState("home");
   const [scrolled, setScrolled] = useState(false);
 
@@ -76,9 +73,6 @@ export const NavBar = () => {
             <div className="social-icon">
               <a href="#">
                 <img src={navIcon1} alt="" />
-              </a>
-              <a href="#">
-                <img src={navIcon2} alt="" />
               </a>
               <a href="#">
                 <img src={navIcon3} alt="" />
