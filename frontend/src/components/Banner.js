@@ -33,10 +33,9 @@ export const Banner = () => {
                     </span>
                   </h1>
                   <p>
-                    AfricaN3 is a community of African NEO users seeking to
-                    bring in more value to the neo ecosystem by attracting and
-                    training talents in our local communities to help provide
-                    value to N3.
+                    A vibrant community that helps expose African talents to the
+                    NEO blockchain and assist them transition into value
+                    creators in the ecosystem.
                   </p>
                   <button onClick={() => console.log("connect")}>
                     Let’s Connect <ArrowRightCircle size={25} />

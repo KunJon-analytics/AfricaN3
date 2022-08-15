@@ -32,7 +32,7 @@ export const Skills = () => {
         <div className="row">
           <div className="col-12">
             <div className="skill-bx wow zoomIn">
-              <h2>Community</h2>
+              <h2>Targets</h2>
               <p>
                 AfricaN3 plans to be the largest and most active regional N3
                 community.<br></br> These are our targets for the next year.
@@ -44,15 +44,15 @@ export const Skills = () => {
               >
                 <div className="item">
                   <img src={meter1} alt="Image" />
-                  <h5>Wallet Addresses</h5>
+                  <h5>Vibrant Community</h5>
                 </div>
                 <div className="item">
                   <img src={meter2} alt="Image" />
-                  <h5>Twitter Followers</h5>
+                  <h5>Integrate Talents</h5>
                 </div>
                 <div className="item">
                   <img src={meter3} alt="Image" />
-                  <h5>Discord Members</h5>
+                  <h5>Explore NEO</h5>
                 </div>
               </Carousel>
             </div>
