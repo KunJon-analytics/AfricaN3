@@ -7,7 +7,6 @@ import Keypad from "./Keypad";
 import Modal from "./Modal";
 
 export default function Wordle({ solution }) {
-  console.log(solution);
   const { currentGuess, guesses, turn, isCorrect, usedKeys, handleKeyup } =
     useWordle(solution);
   const [showModal, setShowModal] = useState(false);
@@ -31,6 +30,7 @@ export default function Wordle({ solution }) {
     <section className="wordle" id="wordle">
       <div className="wordle-bx">
         <h2>Wordle (AfricaN3)</h2>
+        <h2>solution ({solution})</h2>
         {!showModal && (
           <>
             <Grid guesses={guesses} currentGuess={currentGuess} turn={turn} />
