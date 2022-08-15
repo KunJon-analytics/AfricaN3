@@ -1,4 +1,5 @@
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 import { login } from "../utils/auth";
 
 const { NODE_ENV } = process.env;
@@ -10,6 +11,10 @@ if (NODE_ENV === "development") {
 } else {
   baseURL = "https://neo-magpie.herokuapp.com/api/";
 }
+
+const user = localStorage.getItem("access_token")
+  ? jwt_decode(localStorage.getItem("access_token"))
+  : null;
 
 const axiosInstance = axios.create({
   baseURL: baseURL,
@@ -43,7 +48,7 @@ axiosInstance.interceptors.response.use(
       error.response.status === 401 &&
       originalRequest.url === baseURL + "token/refresh/"
     ) {
-      login();
+      login(user.wallet_address);
       return Promise.reject(error);
     }
 
@@ -82,11 +87,11 @@ axiosInstance.interceptors.response.use(
             });
         } else {
           console.log("Refresh token is expired", tokenParts.exp, now);
-          login();
+          login(user.wallet_address);
         }
       } else {
         console.log("Refresh token not available.");
-        login();
+        login(user.wallet_address);
       }
     }
 

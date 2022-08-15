@@ -1,16 +1,11 @@
-import jwt_decode from "jwt-decode";
 import axiosInstance from "../api/axiosInstance";
 import { shortenAddress } from "../utils/shortenAddress";
 
-const user = localStorage.getItem("access_token")
-  ? jwt_decode(localStorage.getItem("access_token"))
-  : null;
-
-export const login = () => {
+export const login = (address) => {
   axiosInstance
     .post(`token/`, {
-      wallet_address: user.wallet_address,
-      password: shortenAddress(user.wallet_address),
+      wallet_address: address,
+      password: shortenAddress(address),
     })
     .then((res) => {
       localStorage.setItem("access_token", res.data.access);
@@ -44,10 +39,10 @@ export const register = (wallet_address) => {
   axiosInstance
     .post(`user/register/`, {
       wallet_address: wallet_address,
-      password: shortenAddress(user.wallet_address),
+      password: shortenAddress(wallet_address),
     })
     .then((res) => {
-      window.location.href = "/";
+      login(wallet_address);
       console.log(res);
       console.log(res.data);
     })
