@@ -34,6 +34,7 @@ INSTALLED_APPS = [
 
     'users',
     'words',
+    'projects',
 ]
 
 MIDDLEWARE = [

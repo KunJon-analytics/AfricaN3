@@ -1,20 +1,12 @@
-from django.http import Http404
-from django.shortcuts import get_object_or_404
-from django.utils import timezone
-from django.db.models import Q
-
 from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, throttle_classes
-from rest_framework.exceptions import PermissionDenied
 from rest_framework import status
 from rest_framework.generics import ListAPIView
 
-from words.models import Sitting, Winner, Wordle, Word, Letter
+from words.models import Wordle, Letter
 from words.twitter_api.tweets import create_wordle_words
-from .serializers import SittingSerializer, WordleSerializer, WordSerializer, AddWordleSerializer, LetterSerializer
-from users.api.mixins import UserQuerySetMixin
+from .serializers import SittingSerializer, WordleSerializer, AddWordleSerializer, LetterSerializer
 
 
 class LetterList(ListAPIView):

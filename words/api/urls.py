@@ -7,6 +7,7 @@ from .views import (
     CreateWordle,
 )
 
+app_name = 'words'
 
 urlpatterns = [
     path('', WordTodayView.as_view()),
