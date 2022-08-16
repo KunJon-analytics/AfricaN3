@@ -1,9 +1,8 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import logo from "../assets/img/whitelogo.png";
 import navIcon1 from "../assets/img/nav-icon1.svg";
 import navIcon3 from "../assets/img/nav-icon3.svg";
-import AuthContext from "../context/AuthContext";
 import ButtonConnect from "./ButtonConnect";
 
 export const NavBar = () => {
@@ -66,7 +65,7 @@ export const NavBar = () => {
               }
               onClick={() => onUpdateActiveLink("projects")}
             >
-              Projects
+              Activities
             </Nav.Link>
           </Nav>
           <span className="navbar-text">

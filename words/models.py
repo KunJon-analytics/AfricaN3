@@ -20,6 +20,7 @@ class Wordle(models.Model):
     STATUS_CHOICES = (
         (CREATED, _('Created')),
         (ENDED, _('Ended')),
+        (PAID, _('Paid')),
     )
 
     title = models.CharField(
