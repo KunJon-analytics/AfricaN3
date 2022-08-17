@@ -167,8 +167,9 @@ class Sitting(models.Model):
         a sitting instance created
         """
         found = self.word.found
+        passed = self.passed
         create_winner = False
-        if not found:
+        if not found and passed:
             create_winner = True
         return create_winner
 
