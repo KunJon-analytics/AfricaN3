@@ -168,7 +168,7 @@ class Sitting(models.Model):
         """
         found = self.word.found
         create_winner = False
-        if found:
+        if not found:
             create_winner = True
         return create_winner
 
