@@ -134,8 +134,13 @@ class Sitting(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='sittings',
                              verbose_name=_("User"), on_delete=models.CASCADE)
 
-    wordle = models.ForeignKey(Wordle, related_name='sittings',
-                             verbose_name=_("Wordle"), on_delete=models.CASCADE)
+    word = models.ForeignKey(Word, related_name='sittings',
+                             verbose_name=_("Word"), on_delete=models.CASCADE)
+
+    attempts = models.PositiveIntegerField(
+        default=1, verbose_name=_("Max Words"),
+        help_text=_("Number of words to be attempted for this game."),
+        validators=[MaxValueValidator(6), MinValueValidator(1)])
 
     word_guessed = models.CharField(max_length=5,
                                blank=False,
@@ -161,9 +166,9 @@ class Sitting(models.Model):
         Finds if a winner instance can be created from
         a sitting instance created
         """
-        word_exists = Word.objects.filter(wordle = self.wordle, content = self.word_guessed, found = False).exists()
+        found = self.word.found
         create_winner = False
-        if word_exists:
+        if found:
             create_winner = True
         return create_winner
 

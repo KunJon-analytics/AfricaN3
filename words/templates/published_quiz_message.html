@@ -1,0 +1,5 @@
+<strong>New Wordle game Alert!!!</strong>
+Title: {{ quiz.title }}
+Description: {{ quiz.description|truncatewords:15 }}
+<strong>Reward Pool:</strong> {{ quiz.reward }} $GAS to be earned for finding {{ quiz.no_of_words }} word{{ quiz.no_of_words|pluralize }}
+Master: {{ quiz.master.shortened_address }}

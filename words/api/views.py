@@ -50,10 +50,11 @@ class CreateSitting(APIView):
 
     def post(self, request):
         user = request.user.id
-        wordle = request.data.get("wordle")
+        word = request.data.get("word")
         passed = request.data.get("passed")
         word_guessed = request.data.get("word_guessed") 
-        data = {'user': user, 'wordle': wordle, 'passed': passed, 'word_guessed': word_guessed}
+        attempts = request.data.get("attempts") 
+        data = {'user': user, 'word': word, 'passed': passed, 'word_guessed': word_guessed, 'attempts': attempts}
         serializer = SittingSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
