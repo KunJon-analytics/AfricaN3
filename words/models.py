@@ -139,7 +139,7 @@ class Sitting(models.Model):
 
     attempts = models.PositiveIntegerField(
         default=1, verbose_name=_("Max Words"),
-        help_text=_("Number of words to be attempted for this game."),
+        help_text=_("Number of attempts for this game."),
         validators=[MaxValueValidator(6), MinValueValidator(1)])
 
     word_guessed = models.CharField(max_length=5,
@@ -158,7 +158,7 @@ class Sitting(models.Model):
         get_latest_by = 'end'
 
     def __str__(self):
-        return "{} on {}" .format(self.user, self.wordle.title)
+        return "{} on {}" .format(self.user, self.word.wordle.title)
 
 
     def can_create_winner(self):
@@ -180,4 +180,4 @@ class Winner(models.Model):
     claimed = models.BooleanField(default=False)
 
     def __str__(self):
-        return "{} on {}" .format(self.sitting.user, self.sitting.wordle.title)
+        return "{} on {}" .format(self.sitting.user, self.sitting.word.wordle.title)

@@ -23,7 +23,7 @@ function App() {
   const [sameWallet, setSameWallet] = useState(false);
   const [solution, setSolution] = useState(null);
 
-  const [wordleData, setWordleData] = useState([]);
+  const [wordleData, setWordleData] = useState({});
 
   useEffect(() => {
     if (connected && !user) {
@@ -45,13 +45,15 @@ function App() {
     }
   }, [setWordleData, sameWallet]);
 
+  console.log(wordleData)
+
   return (
     <div className="App">
       <NavBar />
       <ToastContainer />
       <Banner />
       <Skills />
-      {solution && <Wordle solution={solution} />}
+      {solution && <Wordle solution={solution} wordleData={wordleData} />}
       <Projects />
       <Footer />
     </div>
