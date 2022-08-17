@@ -72,18 +72,18 @@ class CreateWordle(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
-        data = request.data
-        words_added = data.pop("words_added")
-        searchlight = data.pop("searchlight")
-        if words_added:
-            serializer = WordleSerializer(data=data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            else:
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        else:
-            serializer = AddWordleSerializer(data=data)
+        data = request.data.copy()
+        # words_added = data.pop("words_added")
+        searchlight = data.pop("search_twitter")
+        # if words_added:
+        #     serializer = WordleSerializer(data=data)
+        #     if serializer.is_valid():
+        #         serializer.save()
+        #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+        #     else:
+        #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # else:
+        serializer = AddWordleSerializer(data=data)
         if serializer.is_valid():
             wordle = serializer.save()
             create_wordle_words(wordle.pk, searchlight)

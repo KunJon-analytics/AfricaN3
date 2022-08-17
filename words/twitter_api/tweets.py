@@ -170,6 +170,9 @@ def create_wordle_words(wordle_pk, searchlight):
       for words in freq_words:
          Word.objects.create(content = words[0], wordle = wordle)
    else:
+      if words_returned > 0:
+         for words in freq_words:
+            Word.objects.create(content = words[0], wordle = wordle)
       number = words_needed - words_returned
       complete_wordle_words(freq_words, number, wordle)
 

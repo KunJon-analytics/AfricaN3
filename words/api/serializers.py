@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from words.models import Letter, Wordle, Word, Sitting, Winner
+from users.models import CustomUser
 
 class WordSerializer(serializers.ModelSerializer):
     class Meta:
@@ -49,8 +50,9 @@ class WordleSerializer(serializers.ModelSerializer):
 class AddWordleSerializer(serializers.ModelSerializer):
     master = serializers.SlugRelatedField(
         many=False,
-        read_only=True,
-        slug_field='wallet_address'
+        read_only=False,
+        slug_field='wallet_address',
+        queryset = CustomUser.objects.all()
     )
 
     class Meta:

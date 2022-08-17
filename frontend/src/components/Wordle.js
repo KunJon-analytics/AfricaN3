@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useWordle from "../hooks/useWordle";
+import CreateWordle from "./CreateWordle";
 
 // components
 import Grid from "./Grid";
@@ -30,6 +31,7 @@ export default function Wordle({ solution }) {
     <section className="wordle" id="wordle">
       <div className="wordle-bx">
         <h2>Wordle (AfricaN3)</h2>
+        <CreateWordle />
         <h2>solution ({solution})</h2>
         {!showModal && (
           <>
