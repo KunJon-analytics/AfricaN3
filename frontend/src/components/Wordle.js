@@ -10,8 +10,15 @@ import Keypad from "./Keypad";
 import Modal from "./Modal";
 
 export default function Wordle({ solution, wordleData }) {
-  const { currentGuess, guesses, turn, isCorrect, usedKeys, handleKeyup, history } =
-    useWordle(solution);
+  const {
+    currentGuess,
+    guesses,
+    turn,
+    isCorrect,
+    usedKeys,
+    handleKeyup,
+    history,
+  } = useWordle(solution);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -32,30 +39,27 @@ export default function Wordle({ solution, wordleData }) {
   useEffect(() => {
     if (showModal) {
       const submitSitting = () => {
-    try {
-      let presentWord = history.length ? history[history.length - 1]: null
-      let formData = new FormData();
-      formData.append("word", wordleData.word.id);
-      formData.append("passed", isCorrect);
-      formData.append("word_guessed",presentWord);
-      formData.append("attempts", turn);
+        try {
+          let presentWord = history.length ? history[history.length - 1] : null;
+          let formData = new FormData();
+          formData.append("word", wordleData.word.id);
+          formData.append("passed", isCorrect);
+          formData.append("word_guessed", presentWord);
+          formData.append("attempts", turn);
 
-      axiosInstance
+          axiosInstance
             .post(`words/submit/`, formData)
             .then((res) => {
               console.log(res);
-              toast.success(
-                `🦄 Your submission was successful`,
-                {
-                  position: "top-right",
-                  autoClose: 8500,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: false,
-                  draggable: true,
-                  progress: undefined,
-                }
-              );
+              toast.success(`🦄 Your submission was successful`, {
+                position: "top-right",
+                autoClose: 8500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+              });
             })
             .catch((error) => {
               if (error.response) {
@@ -101,33 +105,32 @@ export default function Wordle({ solution, wordleData }) {
                 console.log("Error", error.message);
               }
             });
-    } catch (error) {
-      toast.error("An error occured during submission", {
-        position: "top-right",
-        autoClose: 3500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      toast.error(error.description, {
-        position: "top-right",
-        autoClose: 3500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      console.error(error);
-      console.error("An error occured during submission");
+        } catch (error) {
+          toast.error("An error occured during submission", {
+            position: "top-right",
+            autoClose: 3500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          toast.error(error.description, {
+            position: "top-right",
+            autoClose: 3500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          console.error(error);
+          console.error("An error occured during submission");
+        }
+      };
+      submitSitting();
     }
-  };
-      submitSitting()
-    }
-  }, [showModal])
-  
+  }, [showModal]);
 
   return (
     <section className="wordle" id="wordle">
