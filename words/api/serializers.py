@@ -13,9 +13,16 @@ class SittingSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class WinnerSerializer(serializers.ModelSerializer):
+    sitting = SittingSerializer(many=False, required=True)
+    wordle_id = serializers.SerializerMethodField()
+
     class Meta:
         model = Winner
         fields = '__all__'
+
+    def get_wordle_id(self, obj):
+        data = obj.sitting.word.wordle.wordle_id
+        return data
 
 class LetterSerializer(serializers.ModelSerializer):
     class Meta:

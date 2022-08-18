@@ -13,6 +13,7 @@ import { Banner } from "./components/Banner";
 import { Skills } from "./components/Skills";
 import { Projects } from "./components/Projects";
 import { Footer } from "./components/Footer";
+import { Claims } from "./components/Claims";
 import Wordle from "./components/Wordle";
 import axiosInstance from "./api/axiosInstance";
 import { register } from "./utils/auth";
@@ -22,6 +23,7 @@ function App() {
   const { address, connected, invoke } = useWallet();
   const [sameWallet, setSameWallet] = useState(false);
   const [solution, setSolution] = useState(null);
+  const [wins, setWins] = useState([]);
 
   const [wordleData, setWordleData] = useState({});
 
@@ -42,17 +44,21 @@ function App() {
         setWordleData(res.data);
         setSolution(res.data.word.content);
       });
+      axiosInstance.get("words/wins/").then((res) => {
+        setWins(res.data);
+      });
     }
   }, [setWordleData, sameWallet]);
 
-  console.log(wordleData)
+  console.log(wordleData);
+  console.log(wins);
 
   return (
     <div className="App">
       <NavBar />
       <ToastContainer />
       <Banner />
-      <Skills />
+      {wins.length ? <Claims wins={wins} setWins={setWins} /> : <Skills />}
       {solution && <Wordle solution={solution} wordleData={wordleData} />}
       <Projects />
       <Footer />

@@ -13,12 +13,12 @@ def create_winner_from_sitting(sender, instance, created, **kwargs):
         post_new_winner_on_telegram(winner)
 
 @receiver(post_save, sender=Wordle)
-def trivia_published_alert(sender, instance, created, **kwargs):
+def wordle_published_alert(sender, instance, created, **kwargs):
     if created and instance.status == 0:
         post_published_quiz_on_telegram(instance)
 
 @receiver(post_save, sender=Winner)
-def trivia_published_alert(sender, instance, created, **kwargs):
+def wordle_game_ended(sender, instance, created, **kwargs):
     number_of_winners_created = Winner.objects.filter(sitting__word__wordle__id=instance.sitting.word.wordle.id).count()
     if created and instance.sitting.word.wordle.no_of_words == number_of_winners_created:
         wordle = Wordle.objects.get(pk=instance.sitting.word.wordle.id)

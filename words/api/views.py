@@ -4,9 +4,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import ListAPIView
 
-from words.models import Wordle, Letter
+from words.models import Wordle, Letter, Winner
 from words.twitter_api.tweets import create_wordle_words
-from .serializers import SittingSerializer, WordleSerializer, AddWordleSerializer, LetterSerializer
+from .serializers import SittingSerializer, WordleSerializer, AddWordleSerializer, LetterSerializer, WinnerSerializer
 
 
 class LetterList(ListAPIView):
@@ -91,3 +91,15 @@ class CreateWordle(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class WinningListView(ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = WinnerSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the unclaimed winnings
+        for the currently authenticated user.
+        """
+        user = self.request.user
+        return Winner.objects.filter(sitting__user=user, sitting__word__wordle__status=Wordle.PAID, claimed=False)
