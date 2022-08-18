@@ -7,6 +7,7 @@ from .views import (
     CreateWordle,
     WinningListView,
     MasterListView,
+    winners_publish_view,
 )
 
 app_name = 'words'
@@ -18,4 +19,5 @@ urlpatterns = [
     path('create/', CreateWordle.as_view()),
     path('wins/', WinningListView.as_view()),
     path('unpaid/', MasterListView.as_view()),
+    path('publish-winners/', winners_publish_view),
 ]

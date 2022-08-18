@@ -1,11 +1,17 @@
+from django.shortcuts import get_object_or_404
+from django.db.models import Q
+from django.http import Http404
+
 from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.generics import ListAPIView
 
 from words.models import Wordle, Letter, Winner
 from words.twitter_api.tweets import create_wordle_words
+from words.telegram.bot import post_rewards_sent_on_telegram
 from .mixins import UserQuerySetMixin
 from .serializers import SittingSerializer, WordleSerializer, AddWordleSerializer, LetterSerializer, WinnerSerializer, WordleSittingsSerializer
 
@@ -116,3 +122,49 @@ class MasterListView(UserQuerySetMixin, ListAPIView):
         currently authenticated user / admin that have ended and have not being paid.
         """
         return Wordle.objects.filter(status=Wordle.ENDED)
+
+@api_view(['POST'])
+def winners_publish_view(request, *args, **kwargs): 
+    data = request.data
+    transaction_id = data.get("transaction_id")
+    wordle_id = data.get("wordle_id")
+    obj = get_object_or_404(Wordle, pk=wordle_id)
+    master = obj.master
+
+    if len(transaction_id) > 0 and request.user == master and obj.status == Wordle.ENDED:
+        # todo: check for validity of the transaction_id
+
+        # create a payment instance, publish quiz and send TG message
+        obj.status = Wordle.PAID
+        obj.save()
+        winners = Winner.objects.filter(sitting__word__wordle=obj)
+        post_rewards_sent_on_telegram(winners, obj)
+        content = {'detail': 'The wordle winners have been successfully published'}
+        return Response(content, status=status.HTTP_202_ACCEPTED)
+    bad_content = {'detail': 'Invalid request sent'}
+    return Response(bad_content, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def winner_claim_view(request, *args, **kwargs): 
+    data = request.data
+    transaction_id = data.get("transaction_id")
+    wordle_id = data.get("wordle_id")
+    obj = get_object_or_404(Wordle, pk=wordle_id)
+
+    if len(transaction_id) > 0 and obj.status == Wordle.PAID:
+        # todo: check for validity of the transaction_id
+
+        # get the winner instance and set claimed to true
+        try:
+            winner_instance = Winner.objects.get(Q(sitting__word__wordle=obj),Q(sitting__user=request.user))
+        except Winner.DoesNotExist:
+            raise Http404
+        except Winner.MultipleObjectsReturned:
+            winner_instance = Winner.objects.filter(sitting__word__wordle=obj, sitting__user=request.user).first()
+        winner_instance.claimed = True
+        winner_instance.save()
+        content = {'detail': 'Reward claimed successfully'}
+        return Response(content, status=status.HTTP_202_ACCEPTED)
+    bad_content = {'detail': 'Invalid request sent'}
+    return Response(bad_content, status=status.HTTP_400_BAD_REQUEST)
