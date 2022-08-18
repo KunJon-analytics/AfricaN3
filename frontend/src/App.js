@@ -14,6 +14,7 @@ import { Skills } from "./components/Skills";
 import { Projects } from "./components/Projects";
 import { Footer } from "./components/Footer";
 import { Claims } from "./components/Claims";
+import { RewardWinners } from "./components/RewardWinners";
 import Wordle from "./components/Wordle";
 import axiosInstance from "./api/axiosInstance";
 import { register } from "./utils/auth";
@@ -58,12 +59,22 @@ function App() {
   console.log(wins);
   console.log(unpaid);
 
+  const renderElement = () => {
+    if (unpaid.length) {
+      return <RewardWinners unpaid={unpaid} setUnpaid={setUnpaid} />;
+    } else if (wins.length) {
+      return <Claims wins={wins} setWins={setWins} />;
+    } else {
+      return <Skills />;
+    }
+  };
+
   return (
     <div className="App">
       <NavBar />
       <ToastContainer />
       <Banner />
-      {wins.length ? <Claims wins={wins} setWins={setWins} /> : <Skills />}
+      {renderElement()}
       {solution && <Wordle solution={solution} wordleData={wordleData} />}
       <Projects />
       <Footer />

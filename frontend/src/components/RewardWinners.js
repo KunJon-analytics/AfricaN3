@@ -1,9 +1,9 @@
 import Carousel from "react-multi-carousel";
-import claim from "../assets/img/claim.png";
+import payment from "../assets/img/payment.png";
 import "react-multi-carousel/lib/styles.css";
 import colorSharp from "../assets/img/color-sharp.png";
 
-export const Claims = ({ wins, setWins }) => {
+export const RewardWinners = ({ unpaid, setUnpaid }) => {
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -32,22 +32,24 @@ export const Claims = ({ wins, setWins }) => {
             <div className="skill-bx wow zoomIn">
               <h2>Unclaimed Rewards</h2>
               <p>
-                You have {wins?.length} unclaimed reward(s).<br></br> Click on
-                the reward images to claim them now.
+                There are {unpaid?.length} unpaid game(s) left.<br></br> Click
+                on the image below to release the reward to winners.
               </p>
               <Carousel
                 responsive={responsive}
                 infinite={true}
                 className="owl-carousel owl-theme skill-slider"
               >
-                {wins?.map((win) => (
+                {unpaid?.map((win) => (
                   <div
                     key={win.id}
                     className="item"
                     onClick={() => console.log("clicked")}
                   >
-                    <img src={claim} alt="Image" />
-                    <h5>{win.sitting.word_guessed}</h5>
+                    <img src={payment} alt="Image" />
+                    <h5>
+                      {win.no_of_words} Winner{win.no_of_words > 1 ? "s" : ""}
+                    </h5>
                   </div>
                 ))}
               </Carousel>
