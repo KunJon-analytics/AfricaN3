@@ -24,6 +24,7 @@ function App() {
   const [sameWallet, setSameWallet] = useState(false);
   const [solution, setSolution] = useState(null);
   const [wins, setWins] = useState([]);
+  const [unpaid, setUnpaid] = useState([]);
 
   const [wordleData, setWordleData] = useState({});
 
@@ -47,11 +48,15 @@ function App() {
       axiosInstance.get("words/wins/").then((res) => {
         setWins(res.data);
       });
+      axiosInstance.get("words/unpaid/").then((res) => {
+        setUnpaid(res.data);
+      });
     }
   }, [setWordleData, sameWallet]);
 
   console.log(wordleData);
   console.log(wins);
+  console.log(unpaid);
 
   return (
     <div className="App">

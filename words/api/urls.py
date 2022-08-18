@@ -6,6 +6,7 @@ from .views import (
     LetterList,
     CreateWordle,
     WinningListView,
+    MasterListView,
 )
 
 app_name = 'words'
@@ -16,4 +17,5 @@ urlpatterns = [
     path('submit/', CreateSitting.as_view()),
     path('create/', CreateWordle.as_view()),
     path('wins/', WinningListView.as_view()),
+    path('unpaid/', MasterListView.as_view()),
 ]

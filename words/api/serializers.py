@@ -65,3 +65,38 @@ class AddWordleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Wordle
         fields = '__all__'
+
+class SittingWinnerSerializer(serializers.ModelSerializer):
+    user = serializers.SlugRelatedField(
+        many=False,
+        read_only=False,
+        slug_field='wallet_address',
+        queryset = CustomUser.objects.all()
+    )
+
+    class Meta:
+        model = Sitting
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        try:
+            winner = instance.winner
+            representation['winner'] = True
+        except Winner.DoesNotExist:
+            representation['winner'] = False
+        return representation
+
+class WordleSittingsSerializer(serializers.ModelSerializer):
+    sittings = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Wordle
+        fields = '__all__'
+
+    def get_sittings(self, obj):
+        sits = Sitting.objects.filter(word__wordle__pk=obj.pk)
+        data = SittingWinnerSerializer(sits, many=True).data
+        return data
+
+    
