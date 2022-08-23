@@ -5,7 +5,7 @@ from django.http import Http404
 from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 from rest_framework.generics import ListAPIView
@@ -125,7 +125,7 @@ class MasterListView(UserQuerySetMixin, ListAPIView):
         return Wordle.objects.filter(status=Wordle.ENDED)
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAdminUser])
 def winners_publish_view(request, *args, **kwargs): 
     data = request.data
     transaction_id = data.get("transaction_id")
@@ -148,27 +148,27 @@ def winners_publish_view(request, *args, **kwargs):
     return Response(bad_content, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def winner_claim_view(request, *args, **kwargs): 
-    data = request.data
-    transaction_id = data.get("transaction_id")
-    wordle_id = data.get("wordle_id")
-    obj = get_object_or_404(Wordle, pk=wordle_id)
+# @api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+# def winner_claim_view(request, *args, **kwargs): 
+#     data = request.data
+#     transaction_id = data.get("transaction_id")
+#     wordle_id = data.get("wordle_id")
+#     obj = get_object_or_404(Wordle, pk=wordle_id)
 
-    if len(transaction_id) > 0 and obj.status == Wordle.PAID:
-        # todo: check for validity of the transaction_id
+#     if len(transaction_id) > 0 and obj.status == Wordle.PAID:
+#         # todo: check for validity of the transaction_id
 
-        # get the winner instance and set claimed to true
-        try:
-            winner_instance = Winner.objects.get(Q(sitting__word__wordle=obj),Q(sitting__user=request.user))
-        except Winner.DoesNotExist:
-            raise Http404
-        except Winner.MultipleObjectsReturned:
-            winner_instance = Winner.objects.filter(sitting__word__wordle=obj, sitting__user=request.user).first()
-        winner_instance.claimed = True
-        winner_instance.save()
-        content = {'detail': 'Reward claimed successfully'}
-        return Response(content, status=status.HTTP_202_ACCEPTED)
-    bad_content = {'detail': 'Invalid request sent'}
-    return Response(bad_content, status=status.HTTP_400_BAD_REQUEST)
+#         # get the winner instance and set claimed to true
+#         try:
+#             winner_instance = Winner.objects.get(Q(sitting__word__wordle=obj),Q(sitting__user=request.user))
+#         except Winner.DoesNotExist:
+#             raise Http404
+#         except Winner.MultipleObjectsReturned:
+#             winner_instance = Winner.objects.filter(sitting__word__wordle=obj, sitting__user=request.user).first()
+#         winner_instance.claimed = True
+#         winner_instance.save()
+#         content = {'detail': 'Reward claimed successfully'}
+#         return Response(content, status=status.HTTP_202_ACCEPTED)
+#     bad_content = {'detail': 'Invalid request sent'}
+#     return Response(bad_content, status=status.HTTP_400_BAD_REQUEST)

@@ -14,7 +14,7 @@ import colorSharp from "../assets/img/color-sharp.png";
 import payment from "../assets/img/payment.png";
 
 export const RewardWinners = ({ unpaid, setUnpaid }) => {
-  const { address, connected, invoke } = useWallet();
+  const { address, invoke } = useWallet();
 
   const responsive = {
     superLargeDesktop: {
@@ -36,13 +36,7 @@ export const RewardWinners = ({ unpaid, setUnpaid }) => {
     },
   };
 
-  const sendTransaction = async (
-    wordle_id,
-    wordle_words_no,
-    sittings,
-    blockchain_id,
-    wordle_status
-  ) => {
+  const sendTransaction = async (wordle_id, sittings, blockchain_id) => {
     let winners_list = sittings.filter((sitting) => sitting.winner);
     console.log(winners_list);
     try {
@@ -52,7 +46,7 @@ export const RewardWinners = ({ unpaid, setUnpaid }) => {
       });
       let param = {
         scriptHash: magpieContractAddress,
-        operation: "create_winners",
+        operation: "createWinners",
         args: [
           {
             type: "Integer",

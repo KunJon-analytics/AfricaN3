@@ -56,8 +56,7 @@ export default function CreateWordle() {
       let amount = data.reward * factor;
       let trivia_type = sc.ContractParam.byteArray("wordle");
       let winners_no = sc.ContractParam.integer(data.no_of_words);
-      let converted_amount = sc.ContractParam.integer(amount);
-      let data_array = [trivia_type, winners_no, converted_amount];
+      let data_array = [trivia_type, winners_no];
 
       let param = {
         scriptHash: gasContractAddress,

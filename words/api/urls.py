@@ -8,7 +8,7 @@ from .views import (
     WinningListView,
     MasterListView,
     winners_publish_view,
-    winner_claim_view,
+    # winner_claim_view,
 )
 
 app_name = 'words'
@@ -21,5 +21,5 @@ urlpatterns = [
     path('wins/', WinningListView.as_view()),
     path('unpaid/', MasterListView.as_view()),
     path('publish-winners/', winners_publish_view),
-    path('claim-reward/', winner_claim_view),
+    # path('claim-reward/', winner_claim_view),
 ]
