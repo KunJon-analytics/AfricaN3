@@ -37,9 +37,8 @@ let wordleSchema = object({
     .required("Please type in search keyword"),
 });
 
-export default function CreateWordle() {
+export default function CreateWordle({ show, setShow }) {
   const { address, invoke } = useWallet();
-  const [show, setShow] = useState(false);
   const [stage, setStage] = useState("starting");
 
   const handleClose = () => setShow(false);

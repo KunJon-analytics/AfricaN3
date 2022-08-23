@@ -21,6 +21,7 @@ export default function Wordle({ solution, wordleData }) {
     history,
   } = useWordle(solution);
   const [showModal, setShowModal] = useState(false);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     window.addEventListener("keyup", handleKeyup);
@@ -33,9 +34,12 @@ export default function Wordle({ solution, wordleData }) {
       setTimeout(() => setShowModal(true), 2000);
       window.removeEventListener("keyup", handleKeyup);
     }
+    if (show) {
+      window.removeEventListener("keyup", handleKeyup);
+    }
 
     return () => window.removeEventListener("keyup", handleKeyup);
-  }, [handleKeyup, isCorrect, turn]);
+  }, [handleKeyup, isCorrect, turn, show]);
 
   useEffect(() => {
     if (showModal) {
@@ -146,7 +150,7 @@ export default function Wordle({ solution, wordleData }) {
         {showModal && (
           <Modal isCorrect={isCorrect} turn={turn} solution={solution} />
         )}
-        <CreateWordle />
+        <CreateWordle show={show} setShow={setShow} />
       </div>
     </section>
   );
