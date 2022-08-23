@@ -350,6 +350,7 @@ nav.navbar .vvd {
 .skill-slider .item img {
   width: 50%;
   margin: 0 auto 15px auto;
+  cursor: pointer;
 }
 .background-image-left {
   top: 28%;

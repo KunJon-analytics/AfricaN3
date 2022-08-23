@@ -13,7 +13,6 @@ export default function Modal({ isCorrect, solution, turn }) {
       {!isCorrect && (
         <div className="polygon">
           <h2>Nevermind</h2>
-          <p className="solution">{solution}</p>
           <p>Better luck next time :)</p>
         </div>
       )}

@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import InputGroup from "react-bootstrap/InputGroup";
-import { sc, wallet, u } from "@cityofzion/neon-js";
+import { sc, wallet } from "@cityofzion/neon-js";
 import { helpers } from "@cityofzion/props";
 import { useWallet } from "@rentfuse-labs/neo-wallet-adapter-react";
 import { toast } from "react-toastify";
@@ -55,10 +55,9 @@ export default function CreateWordle() {
       // Construct the request and invoke it
       let amount = data.reward * factor;
       let trivia_type = sc.ContractParam.byteArray("wordle");
-      let token = sc.ContractParam.hash160(gasContractAddress);
       let winners_no = sc.ContractParam.integer(data.no_of_words);
       let converted_amount = sc.ContractParam.integer(amount);
-      let data_array = [trivia_type, token, winners_no, converted_amount];
+      let data_array = [trivia_type, winners_no, converted_amount];
 
       let param = {
         scriptHash: gasContractAddress,
@@ -95,10 +94,10 @@ export default function CreateWordle() {
 
       if (result.data?.txId) {
         console.log("sleeping...");
-        await helpers.sleep(30000);
+        await helpers.sleep(25000);
         let events = await helpers.getEvents(nodeUrl, result.data?.txId);
         if (events.length) {
-          const triviaId = JSON.stringify(events[1].value[0]);
+          const triviaId = JSON.stringify(events[3].value[0]);
           toast.success(`🦄 New Wordle game created with ID: ${triviaId}!`, {
             position: "top-right",
             autoClose: 3500,
@@ -307,7 +306,7 @@ export default function CreateWordle() {
                     </Form.Control.Feedback>
                   </InputGroup>
                   <Form.Text id="numberOfWordsHelpBlock" muted>
-                    The number of words in this game. Each word costs 0.2 $GAS
+                    The number of words in this game.
                   </Form.Text>
                 </Form.Group>
                 <Form.Group

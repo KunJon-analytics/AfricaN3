@@ -13,11 +13,11 @@ import { Banner } from "./components/Banner";
 import { Skills } from "./components/Skills";
 import { Projects } from "./components/Projects";
 import { Footer } from "./components/Footer";
-import { Claims } from "./components/Claims";
 import { RewardWinners } from "./components/RewardWinners";
 import Wordle from "./components/Wordle";
 import axiosInstance from "./api/axiosInstance";
 import { register } from "./utils/auth";
+import { adminAddress } from "./utils/constants";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -43,11 +43,10 @@ function App() {
   useEffect(() => {
     if (sameWallet) {
       axiosInstance.get("words/").then((res) => {
-        setWordleData(res.data);
-        setSolution(res.data.word.content);
-      });
-      axiosInstance.get("words/wins/").then((res) => {
-        setWins(res.data);
+        if (res.data) {
+          setWordleData(res.data);
+          setSolution(res.data.word.content);
+        }
       });
       axiosInstance.get("words/unpaid/").then((res) => {
         setUnpaid(res.data);
@@ -60,10 +59,8 @@ function App() {
   console.log(unpaid);
 
   const renderElement = () => {
-    if (unpaid.length) {
+    if (unpaid.length && connected && address == adminAddress) {
       return <RewardWinners unpaid={unpaid} setUnpaid={setUnpaid} />;
-    } else if (wins.length) {
-      return <Claims wins={wins} setWins={setWins} />;
     } else {
       return <Skills />;
     }

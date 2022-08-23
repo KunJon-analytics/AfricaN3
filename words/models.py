@@ -36,7 +36,7 @@ class Wordle(models.Model):
 
     status = models.PositiveSmallIntegerField(_("Status"), choices=STATUS_CHOICES, default=CREATED)
 
-    reward = models.PositiveIntegerField(
+    reward = models.FloatField(
         blank=True, null=True, verbose_name=_("Reward"),
         help_text=_("Total reward to be shared among winners"))
 

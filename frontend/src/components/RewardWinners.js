@@ -1,9 +1,21 @@
+import { useState } from "react";
+
 import Carousel from "react-multi-carousel";
-import payment from "../assets/img/payment.png";
+import { toast } from "react-toastify";
 import "react-multi-carousel/lib/styles.css";
+import { WitnessScope } from "@rentfuse-labs/neo-wallet-adapter-base";
+import { helpers } from "@cityofzion/props";
+import { useWallet } from "@rentfuse-labs/neo-wallet-adapter-react";
+import { sc, wallet } from "@cityofzion/neon-js";
+
+import axiosInstance from "../api/axiosInstance";
+import { nodeUrl, magpieContractAddress } from "../utils/constants";
 import colorSharp from "../assets/img/color-sharp.png";
+import payment from "../assets/img/payment.png";
 
 export const RewardWinners = ({ unpaid, setUnpaid }) => {
+  const { address, connected, invoke } = useWallet();
+
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -22,6 +34,161 @@ export const RewardWinners = ({ unpaid, setUnpaid }) => {
       breakpoint: { max: 464, min: 0 },
       items: 1,
     },
+  };
+
+  const sendTransaction = async (
+    wordle_id,
+    wordle_words_no,
+    sittings,
+    blockchain_id,
+    wordle_status
+  ) => {
+    let winners_list = sittings.filter((sitting) => sitting.winner);
+    console.log(winners_list);
+    try {
+      // Construct the request and invoke it
+      let raw_traits = winners_list?.map((winner) => {
+        return sc.ContractParam.hash160(winner.user);
+      });
+      let param = {
+        scriptHash: magpieContractAddress,
+        operation: "create_winners",
+        args: [
+          {
+            type: "Integer",
+            value: sc.ContractParam.integer(blockchain_id).toJson().value,
+          },
+          {
+            type: "Array",
+            value: sc.ContractParam.array(...raw_traits).toJson().value,
+          },
+        ],
+        signers: [
+          {
+            account: wallet.getScriptHashFromAddress(address),
+            scopes: WitnessScope.CalledByEntry,
+          },
+        ],
+      };
+      console.log(raw_traits);
+      console.log(param);
+      const result = await invoke(param);
+      // Optional: Wait for the transaction to be confirmed onchain
+      if (result.data?.txId) {
+        await helpers.sleep(30000);
+        let new_result;
+        new_result = await helpers.txDidComplete(
+          nodeUrl,
+          result.data?.txId,
+          true
+        );
+        const published = new_result[0];
+        if (!published) {
+          toast.error("Winners were not published.", {
+            position: "top-right",
+            autoClose: 3500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          console.error(`Winners were not published`);
+          return;
+        }
+        let data = {
+          transaction_id: result.data?.txId,
+          wordle_id: wordle_id,
+        };
+        axiosInstance
+          .post(`words/publish-winners/`, data)
+          .then((res) => {
+            console.log(res.data);
+            toast.success("Winners successfully published", {
+              position: "top-right",
+              autoClose: 3500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+            setUnpaid((prevState) =>
+              prevState.filter((wordle) => wordle.id != wordle_id)
+            );
+          })
+          .catch((error) => {
+            if (error.response) {
+              // The request was made and the server responded with a status code
+              // that falls out of the range of 2xx
+              toast.error(error.response.data.detail, {
+                position: "top-right",
+                autoClose: 3500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              });
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+            } else if (error.request) {
+              // The request was made but no response was received
+              // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+              // http.ClientRequest in node.js
+              toast.error(error.request, {
+                position: "top-right",
+                autoClose: 3500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              });
+              console.log(error.request);
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              toast.error(error.message, {
+                position: "top-right",
+                autoClose: 3500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              });
+              console.log("Error", error.message);
+            }
+          });
+      }
+    } catch (error) {
+      toast.error(
+        "An error occurred while publishing the winners of the wordle game",
+        {
+          position: "top-right",
+          autoClose: 3500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+      );
+      toast.error(error.description, {
+        position: "top-right",
+        autoClose: 3500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      console.error(error);
+      console.error(
+        "An error occurred while publishing the winners of the wordle game"
+      );
+    }
   };
 
   return (
@@ -44,7 +211,15 @@ export const RewardWinners = ({ unpaid, setUnpaid }) => {
                   <div
                     key={win.id}
                     className="item"
-                    onClick={() => console.log("clicked")}
+                    onClick={() =>
+                      sendTransaction(
+                        win.id,
+                        win.no_of_words,
+                        win.sittings,
+                        win.wordle_id,
+                        win.status
+                      )
+                    }
                   >
                     <img src={payment} alt="Image" />
                     <h5>

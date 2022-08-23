@@ -5,7 +5,8 @@ from django.http import Http404
 from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 from rest_framework.generics import ListAPIView
 
@@ -124,14 +125,16 @@ class MasterListView(UserQuerySetMixin, ListAPIView):
         return Wordle.objects.filter(status=Wordle.ENDED)
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def winners_publish_view(request, *args, **kwargs): 
     data = request.data
     transaction_id = data.get("transaction_id")
     wordle_id = data.get("wordle_id")
     obj = get_object_or_404(Wordle, pk=wordle_id)
-    master = obj.master
+    is_admin = request.user.is_staff
+    allowed = is_admin
 
-    if len(transaction_id) > 0 and request.user == master and obj.status == Wordle.ENDED:
+    if len(transaction_id) > 0 and allowed and obj.status == Wordle.ENDED:
         # todo: check for validity of the transaction_id
 
         # create a payment instance, publish quiz and send TG message
@@ -146,6 +149,7 @@ def winners_publish_view(request, *args, **kwargs):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def winner_claim_view(request, *args, **kwargs): 
     data = request.data
     transaction_id = data.get("transaction_id")
