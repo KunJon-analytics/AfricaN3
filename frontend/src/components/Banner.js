@@ -7,6 +7,12 @@ import TrackVisibility from "react-on-screen";
 import { TypingComponent } from "./Typing";
 
 export const Banner = () => {
+  function NewTab() {
+    window.open(
+      "https://twitter.com/Africa_N3?t=_5zJpCZUotnMAhzYWbj7uw&s=08",
+      "_blank"
+    );
+  }
   return (
     <section className="banner" id="home">
       <Container>
@@ -37,7 +43,7 @@ export const Banner = () => {
                     NEO blockchain and assist them transition into value
                     creators in the ecosystem.
                   </p>
-                  <button onClick={() => console.log("connect")}>
+                  <button onClick={() => NewTab()}>
                     Let’s Connect <ArrowRightCircle size={25} />
                   </button>
                 </div>

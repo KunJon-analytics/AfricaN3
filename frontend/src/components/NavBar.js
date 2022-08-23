@@ -70,11 +70,14 @@ export const NavBar = () => {
           </Nav>
           <span className="navbar-text">
             <div className="social-icon">
-              <a href="#">
-                <img src={navIcon1} alt="" />
+              <a
+                href="https://twitter.com/Africa_N3?t=_5zJpCZUotnMAhzYWbj7uw&s=08"
+                target="_blank"
+              >
+                <img src={navIcon1} alt="twitter" />
               </a>
-              <a href="#">
-                <img src={navIcon3} alt="" />
+              <a href="https://t.me/FoxyHunters" target="_blank">
+                <img src={navIcon3} alt="telegram" />
               </a>
             </div>
             <ButtonConnect />
