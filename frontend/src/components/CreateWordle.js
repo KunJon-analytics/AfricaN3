@@ -15,6 +15,7 @@ import {
   magpieContractAddress,
   gasContractAddress,
 } from "../utils/constants";
+import { CirclesWithBar, Puff } from "react-loader-spinner";
 import { Formik } from "formik";
 import { object, string, number } from "yup";
 
@@ -39,12 +40,14 @@ let wordleSchema = object({
 export default function CreateWordle() {
   const { address, invoke } = useWallet();
   const [show, setShow] = useState(false);
+  const [stage, setStage] = useState("starting");
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const handleQuizCreateForm = async (data) => {
     try {
+      handleClose();
       let formData = new FormData();
       formData.append("title", data.title);
       formData.append("description", data.description);
@@ -89,11 +92,12 @@ export default function CreateWordle() {
       };
 
       const result = await invoke(param);
-      console.log("sending tx...");
 
       if (result.data?.txId) {
         console.log("sleeping...");
+        setStage("blockchain");
         await helpers.sleep(25000);
+        setStage("API");
         let events = await helpers.getEvents(nodeUrl, result.data?.txId);
         if (events.length) {
           const triviaId = JSON.stringify(events[3].value[0]);
@@ -109,6 +113,7 @@ export default function CreateWordle() {
           formData.append("wordle_id", triviaId);
           formData.append("master", address);
           formData.append("transaction_id", result.data?.txId);
+          setStage("starting");
           axiosInstance
             .post(`words/create/`, formData)
             .then((res) => {
@@ -202,6 +207,30 @@ export default function CreateWordle() {
         Create Wordle
       </Button>
 
+      <CirclesWithBar
+        height="100"
+        width="100"
+        color="#4fa94d"
+        wrapperStyle={{}}
+        wrapperClass="loader"
+        visible={stage === "blockchain"}
+        outerCircleColor=""
+        innerCircleColor=""
+        barColor=""
+        ariaLabel="circles-with-bar-loading"
+      />
+
+      <Puff
+        height="80"
+        width="80"
+        radisu={1}
+        color="#4fa94d"
+        ariaLabel="puff-loading"
+        wrapperStyle={{}}
+        wrapperClass="loader"
+        visible={stage === "API"}
+      />
+
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header>
           <Modal.Title>Create a Wordle Game</Modal.Title>
@@ -218,15 +247,7 @@ export default function CreateWordle() {
               search_twitter: "",
             }}
           >
-            {({
-              handleSubmit,
-              handleChange,
-              handleBlur,
-              values,
-              touched,
-              isValid,
-              errors,
-            }) => (
+            {({ handleSubmit, handleChange, values, touched, errors }) => (
               <Form noValidate onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="validationFormik01">
                   <Form.Label>Title</Form.Label>

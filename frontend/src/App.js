@@ -24,7 +24,6 @@ function App() {
   const { address, connected, invoke } = useWallet();
   const [sameWallet, setSameWallet] = useState(false);
   const [solution, setSolution] = useState(null);
-  const [wins, setWins] = useState([]);
   const [unpaid, setUnpaid] = useState([]);
 
   const [wordleData, setWordleData] = useState({});
@@ -53,10 +52,6 @@ function App() {
       });
     }
   }, [setWordleData, sameWallet]);
-
-  console.log(wordleData);
-  console.log(wins);
-  console.log(unpaid);
 
   const renderElement = () => {
     if (unpaid.length && connected && address == adminAddress) {

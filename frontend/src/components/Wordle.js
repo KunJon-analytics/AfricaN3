@@ -10,6 +10,7 @@ import Keypad from "./Keypad";
 import Modal from "./Modal";
 
 export default function Wordle({ solution, wordleData }) {
+  console.log(wordleData);
   const {
     currentGuess,
     guesses,
@@ -135,9 +136,7 @@ export default function Wordle({ solution, wordleData }) {
   return (
     <section className="wordle" id="wordle">
       <div className="wordle-bx">
-        <h2>Wordle (AfricaN3)</h2>
-        <CreateWordle />
-        <h2>solution ({solution})</h2>
+        <h2>{`Win ${wordleData.reward / wordleData.no_of_words} $GAS`}</h2>
         {!showModal && (
           <>
             <Grid guesses={guesses} currentGuess={currentGuess} turn={turn} />
@@ -147,6 +146,7 @@ export default function Wordle({ solution, wordleData }) {
         {showModal && (
           <Modal isCorrect={isCorrect} turn={turn} solution={solution} />
         )}
+        <CreateWordle />
       </div>
     </section>
   );
