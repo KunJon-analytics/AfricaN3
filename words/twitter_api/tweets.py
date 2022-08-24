@@ -186,4 +186,4 @@ def create_letters():
    for letter in letters:
       obj, created = Letter.objects.get_or_create(key=letter)
 
-# create_letters()
+create_letters()
