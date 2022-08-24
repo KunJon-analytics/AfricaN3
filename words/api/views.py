@@ -1,8 +1,5 @@
 from django.shortcuts import get_object_or_404
-from django.db.models import Q
-from django.http import Http404
 
-from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -20,7 +17,7 @@ from .serializers import SittingSerializer, WordleSerializer, AddWordleSerialize
 class LetterList(ListAPIView):
     queryset = Letter.objects.all()
     serializer_class = LetterSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
 class WordTodayView(APIView):
     """
@@ -28,7 +25,8 @@ class WordTodayView(APIView):
 
     * Requires user to be authenticated.
     """
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+    throttle_scope = 'game'
 
     def get(self, request, format=None):
         """
@@ -54,7 +52,8 @@ class CreateSitting(APIView):
     * Requires user to be authenticated.
     * Can only be called once daily by a user
     """
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+    throttle_scope = 'game'
 
     def post(self, request):
         user = request.user.id
@@ -78,7 +77,7 @@ class CreateWordle(APIView):
     * Requires user to be authenticated.
     * tx_id must be confirmed to ensure payment is made
     """
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         data = request.data.copy()
@@ -101,7 +100,7 @@ class CreateWordle(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class WinningListView(ListAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     serializer_class = WinnerSerializer
 
     def get_queryset(self):
@@ -114,7 +113,7 @@ class WinningListView(ListAPIView):
 
 class MasterListView(UserQuerySetMixin, ListAPIView):
     user_field = 'master'
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     serializer_class = WordleSittingsSerializer
 
     def get_queryset(self):

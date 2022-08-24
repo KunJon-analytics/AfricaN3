@@ -10,7 +10,6 @@ import Keypad from "./Keypad";
 import Modal from "./Modal";
 
 export default function Wordle({ solution, wordleData }) {
-  console.log(wordleData);
   const {
     currentGuess,
     guesses,
