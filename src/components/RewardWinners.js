@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import Carousel from "react-multi-carousel";
 import { toast } from "react-toastify";
 import "react-multi-carousel/lib/styles.css";
@@ -108,7 +106,7 @@ export const RewardWinners = ({ unpaid, setUnpaid }) => {
               progress: undefined,
             });
             setUnpaid((prevState) =>
-              prevState.filter((wordle) => wordle.id != wordle_id)
+              prevState.filter((wordle) => wordle.id !== wordle_id)
             );
           })
           .catch((error) => {
@@ -215,7 +213,7 @@ export const RewardWinners = ({ unpaid, setUnpaid }) => {
                       )
                     }
                   >
-                    <img src={payment} alt="Image" />
+                    <img src={payment} alt="Unpaid winners" />
                     <h5>
                       {win.no_of_words} Winner{win.no_of_words > 1 ? "s" : ""}
                     </h5>
@@ -226,7 +224,11 @@ export const RewardWinners = ({ unpaid, setUnpaid }) => {
           </div>
         </div>
       </div>
-      <img className="background-image-left" src={colorSharp} alt="Image" />
+      <img
+        className="background-image-left"
+        src={colorSharp}
+        alt="unpaid winners"
+      />
     </section>
   );
 };

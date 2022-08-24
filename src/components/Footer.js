@@ -16,10 +16,15 @@ export const Footer = () => {
               <a
                 href="https://twitter.com/Africa_N3?t=_5zJpCZUotnMAhzYWbj7uw&s=08"
                 target="_blank"
+                rel="noreferrer"
               >
                 <img src={navIcon1} alt="Icon" />
               </a>
-              <a href="https://t.me/FoxyHunters" target="_blank">
+              <a
+                href="https://t.me/FoxyHunters"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <img src={navIcon3} alt="Icon" />
               </a>
             </div>

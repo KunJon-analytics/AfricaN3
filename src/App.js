@@ -21,7 +21,7 @@ import { adminAddress } from "./utils/constants";
 
 function App() {
   const { user } = useContext(AuthContext);
-  const { address, connected, invoke } = useWallet();
+  const { address, connected } = useWallet();
   const [sameWallet, setSameWallet] = useState(false);
   const [solution, setSolution] = useState(null);
   const [unpaid, setUnpaid] = useState([]);
@@ -31,7 +31,7 @@ function App() {
   useEffect(() => {
     if (connected && !user) {
       register(address);
-    } else if (connected && address == user.wallet_address) {
+    } else if (connected && address === user.wallet_address) {
       setSameWallet(true);
     } else {
       setSameWallet(false);
@@ -101,7 +101,7 @@ function App() {
   }, [setWordleData, sameWallet]);
 
   const renderElement = () => {
-    if (unpaid.length && connected && address == adminAddress) {
+    if (unpaid.length && connected && address === adminAddress) {
       return <RewardWinners unpaid={unpaid} setUnpaid={setUnpaid} />;
     } else {
       return <Skills />;
