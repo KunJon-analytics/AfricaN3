@@ -22,7 +22,7 @@ DEBUG = str(env('DEBUG'))=='1'
 SECRET_KEY = env('DJANGO_SECRET_KEY') or 'django-insecure-*1(z_n=g0=47qpkkd&t31+@$h$fxlms^%b#1=%o^op2qvkb592'
 
 ENV_ALLOWED_HOST = env('DJANGO_ALLOWED_HOST') or None
-ALLOWED_HOSTS =  ['neo-magpie.herokuapp.com', '.yourdomain.com']
+ALLOWED_HOSTS =  ['african3.herokuapp.com']
 if ENV_ALLOWED_HOST is not None:
     ALLOWED_HOSTS = [ ENV_ALLOWED_HOST ]
 
@@ -228,7 +228,7 @@ if not DEBUG:
     "http://localhost:3000",
     "http://localhost:8080",
     "http://127.0.0.1:9000",
-    "https://neo-magpie.herokuapp.com",
+    "https://african3.herokuapp.com",
 ]
 
 
