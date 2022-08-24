@@ -1,6 +1,7 @@
 from pathlib import Path
 from datetime import timedelta
 import os
+import mimetypes
 from pickle import TRUE
 import environ
 import django_heroku
@@ -13,6 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 environ.Env.read_env()
 
+mimetypes.add_type("application/javascript", ".js", True)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
