@@ -1,4 +1,8 @@
+import os
+
 from django.shortcuts import get_object_or_404
+from django.views import View
+from django.http import HttpResponse, HttpResponseNotFound
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -145,6 +149,17 @@ def winners_publish_view(request, *args, **kwargs):
         return Response(content, status=status.HTTP_202_ACCEPTED)
     bad_content = {'detail': 'Invalid request sent'}
     return Response(bad_content, status=status.HTTP_400_BAD_REQUEST)
+
+class Assets(View):
+
+    def get(self, _request, filename):
+        path = os.path.join(os.path.dirname(__file__), 'static', filename)
+
+        if os.path.isfile(path):
+            with open(path, 'rb') as file:
+                return HttpResponse(file.read(), content_type='application/javascript')
+        else:
+            return HttpResponseNotFound()
 
 
 # @api_view(['POST'])
