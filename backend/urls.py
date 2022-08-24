@@ -1,7 +1,8 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
 
 from users.api.views import MyTokenObtainPairView
 from rest_framework_simplejwt.views import (
@@ -17,6 +18,8 @@ urlpatterns = [
     path('api/projects/', include('projects.api.urls', namespace='projects')),
     # User Management
     path('api/user/', include('users.api.urls', namespace='users')),
+    # For capturing other paths
+    re_path(r'.*', TemplateView.as_view(template_name='index.html'))
 ]
 
 if settings.DEBUG:
