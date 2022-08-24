@@ -1,5 +1,6 @@
 {
   "name": "personal-portfolio",
+  "homepage": ".",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -43,6 +44,10 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject"
+  },
+  "engines": {
+    "node": "16.15.1",
+    "npm": "8.11.0"
   },
   "eslintConfig": {
     "extends": [
