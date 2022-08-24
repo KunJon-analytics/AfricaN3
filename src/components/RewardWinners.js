@@ -227,7 +227,7 @@ export const RewardWinners = ({ unpaid, setUnpaid }) => {
       <img
         className="background-image-left"
         src={colorSharp}
-        alt="unpaid winners"
+        alt="unpaid winner"
       />
     </section>
   );
