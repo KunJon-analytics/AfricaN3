@@ -149,8 +149,9 @@ export default function Wordle({ solution, wordleData }) {
         {!showModal && (
           <>
             <input
-              className="insert d-md-none"
+              className="insert d-lg-none"
               type="text"
+              placeholder="Click to play"
               value={currentGuess}
               autoFocus
               readOnly
