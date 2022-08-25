@@ -1,6 +1,5 @@
 import Carousel from "react-multi-carousel";
 import { toast } from "react-toastify";
-import "react-multi-carousel/lib/styles.css";
 import { WitnessScope } from "@rentfuse-labs/neo-wallet-adapter-base";
 import { helpers } from "@cityofzion/props";
 import { useWallet } from "@rentfuse-labs/neo-wallet-adapter-react";
