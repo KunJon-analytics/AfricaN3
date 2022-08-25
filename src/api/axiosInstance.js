@@ -16,6 +16,9 @@ const user = localStorage.getItem("access_token")
   ? jwt_decode(localStorage.getItem("access_token"))
   : null;
 
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.xsrfHeaderName = "X-CSRFToken";
+
 const axiosInstance = axios.create({
   baseURL: baseURL,
   timeout: 5000,
