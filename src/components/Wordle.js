@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { toast } from "react-toastify";
 import useWordle from "../hooks/useWordle";
 import CreateWordle from "./CreateWordle";
@@ -39,6 +39,12 @@ export default function Wordle({ solution, wordleData }) {
 
     return () => window.removeEventListener("keyup", handleKeyup);
   }, [handleKeyup, isCorrect, turn, show]);
+
+  const startGameInput = useCallback((inputElement) => {
+    if (inputElement) {
+      inputElement.focus();
+    }
+  }, []);
 
   useEffect(() => {
     if (showModal) {
@@ -142,6 +148,14 @@ export default function Wordle({ solution, wordleData }) {
         <h2>{`Win ${wordleData.reward / wordleData.no_of_words} $GAS`}</h2>
         {!showModal && (
           <>
+            <input
+              className="insert d-md-none"
+              type="text"
+              value={currentGuess}
+              autoFocus
+              readOnly
+              ref={startGameInput}
+            />
             <Grid guesses={guesses} currentGuess={currentGuess} turn={turn} />
             <Keypad usedKeys={usedKeys} />
           </>

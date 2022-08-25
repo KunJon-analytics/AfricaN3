@@ -730,6 +730,15 @@ nav.navbar .vvd {
   margin-top: -10px;
 }
 
+.wordle-bx .insert {
+  border: none;
+  outline-width: 0;
+  background-color: transparent;
+  resize: none;
+  outline: none;
+  color: #bbb;
+}
+
 .wordle .keypad > div.green {
   background: #5ac85a;
   color: #fff;
