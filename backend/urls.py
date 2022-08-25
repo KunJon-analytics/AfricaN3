@@ -19,7 +19,7 @@ urlpatterns = [
     # User Management
     path('api/user/', include('users.api.urls', namespace='users')),
     # For capturing other paths
-    re_path(r'.*', TemplateView.as_view(template_name='index.html'))
+    # re_path(r'.*', TemplateView.as_view(template_name='index.html'))
 ]
 
 if settings.DEBUG:
