@@ -151,7 +151,6 @@ export default function Wordle({ solution, wordleData }) {
             <input
               className="insert d-lg-none"
               type="text"
-              value={currentGuess}
               autoFocus
               onChange={() => console.log(currentGuess)}
               ref={startGameInput}
