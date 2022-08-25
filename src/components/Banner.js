@@ -29,7 +29,6 @@ export const Banner = () => {
                     {`We love`}{" "}
                     <span
                       className="txt-rotate"
-                      dataPeriod="1000"
                       data-rotate='[ "the Smart Economy", "the Metaverse", "DeFi" ]'
                     >
                       <span className="wrap">

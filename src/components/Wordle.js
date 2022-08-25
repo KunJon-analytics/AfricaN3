@@ -151,10 +151,9 @@ export default function Wordle({ solution, wordleData }) {
             <input
               className="insert d-lg-none"
               type="text"
-              placeholder="Click to play"
               value={currentGuess}
               autoFocus
-              readOnly
+              onChange={() => console.log(currentGuess)}
               ref={startGameInput}
             />
             <Grid guesses={guesses} currentGuess={currentGuess} turn={turn} />
