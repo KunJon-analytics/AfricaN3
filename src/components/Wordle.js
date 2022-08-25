@@ -23,7 +23,7 @@ export default function Wordle({ solution, wordleData }) {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    window.addEventListener("keyup", handleKeyup);
+    // window.addEventListener("keyup", handleKeyup);
 
     if (isCorrect) {
       setTimeout(() => setShowModal(true), 2000);
@@ -149,10 +149,11 @@ export default function Wordle({ solution, wordleData }) {
         {!showModal && (
           <>
             <input
-              className="insert d-lg-none"
+              className="insert"
               type="text"
               autoFocus
               onChange={() => console.log(currentGuess)}
+              onKeyUp={handleKeyup}
               ref={startGameInput}
             />
             <Grid guesses={guesses} currentGuess={currentGuess} turn={turn} />
