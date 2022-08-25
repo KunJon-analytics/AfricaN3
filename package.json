@@ -1,6 +1,5 @@
 {
   "name": "personal-portfolio",
-  "homepage": ".",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -43,7 +42,8 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postinstall": "npm run build"
   },
   "engines": {
     "node": "16.15.1",
