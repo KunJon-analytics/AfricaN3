@@ -135,6 +135,7 @@ const useWordle = (solution) => {
         console.log("word must be 5 chars.");
         return;
       }
+      setUserInput("");
       const formatted = formatGuess();
       addNewGuess(formatted);
     }
@@ -142,21 +143,21 @@ const useWordle = (solution) => {
       setCurrentGuess((prev) => prev.slice(0, -1));
       return;
     }
-    if (/^[A-Za-z]$/.test(key)) {
-      if (currentGuess.length < 5) {
-        setCurrentGuess((prev) => prev + key);
-        return;
-      }
-    }
+    // if (/^[A-Za-z]$/.test(key)) {
+    //   if (currentGuess.length < 5) {
+    //     setCurrentGuess((prev) => prev + key);
+    //     return;
+    //   }
+    // }
     var kCd = keyCode || which;
     if (kCd === 0 || kCd === 229) {
       //for android chrome keycode fix
       kCd = getKeyCode(userInput);
-      if (kCd >= 65 && kCd <= 90) {
-        if (currentGuess.length < 5) {
-          const letter = getlastChar(userInput);
-          setCurrentGuess((prev) => prev + letter);
-        }
+    }
+    if (kCd >= 65 && kCd <= 90) {
+      if (currentGuess.length < 5) {
+        var letter = getlastChar(userInput);
+        setCurrentGuess((prev) => prev + letter);
       }
     }
   };
