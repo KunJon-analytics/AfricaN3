@@ -44,7 +44,7 @@ export default function Wordle({ solution, wordleData }) {
     }
 
     return () => window.removeEventListener("keyup", handleKeyup);
-  }, [handleKeyup, isCorrect, turn, show]);
+  }, [handleKeyup, isCorrect, turn, show, userInput]);
 
   const startGameInput = useCallback((inputElement) => {
     if (inputElement) {
