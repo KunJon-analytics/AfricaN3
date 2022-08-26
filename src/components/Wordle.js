@@ -18,9 +18,15 @@ export default function Wordle({ solution, wordleData }) {
     usedKeys,
     handleKeyup,
     history,
+    userInput,
+    setUserInput,
   } = useWordle(solution);
   const [showModal, setShowModal] = useState(false);
   const [show, setShow] = useState(false);
+
+  function handleChange(event) {
+    setUserInput(event.target.value);
+  }
 
   useEffect(() => {
     // window.addEventListener("keyup", handleKeyup);
@@ -152,7 +158,8 @@ export default function Wordle({ solution, wordleData }) {
               className="insert"
               type="text"
               autoFocus
-              onChange={() => console.log(currentGuess)}
+              value={userInput}
+              onChange={handleChange}
               onKeyUp={handleKeyup}
               ref={startGameInput}
             />

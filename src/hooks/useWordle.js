@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 
 const useWordle = (solution) => {
   const [turn, setTurn] = useState(0);
+  const [userInput, setUserInput] = useState("");
   const [currentGuess, setCurrentGuess] = useState("");
   const [guesses, setGuesses] = useState([...Array(6)]); // each guess is an array
   const [history, setHistory] = useState([]); // each guess is a string
@@ -80,7 +81,14 @@ const useWordle = (solution) => {
 
   // handle keyup event & track current guess
   // if user presses enter, add the new guess
-  const handleKeyup = ({ key, keyCode }) => {
+  var getKeyCode = function (str) {
+    return str.charCodeAt(str.length - 1);
+  };
+  var getlastChar = function (str) {
+    return str.slice(-1);
+  };
+
+  const handleKeyup = ({ key, keyCode, which }) => {
     if (key === "Enter") {
       // only add guess if turn is less than 5
       if (turn > 5) {
@@ -134,9 +142,21 @@ const useWordle = (solution) => {
       setCurrentGuess((prev) => prev.slice(0, -1));
       return;
     }
-    if (/^[A-Za-z]$/.test(key) || (keyCode >= 65 && keyCode <= 90)) {
+    if (/^[A-Za-z]$/.test(key)) {
       if (currentGuess.length < 5) {
         setCurrentGuess((prev) => prev + key);
+        return;
+      }
+    }
+    var kCd = keyCode || which;
+    if (kCd === 0 || kCd === 229) {
+      //for android chrome keycode fix
+      kCd = getKeyCode(userInput);
+      if (kCd >= 65 && kCd <= 90) {
+        if (currentGuess.length < 5) {
+          const letter = getlastChar(userInput);
+          setCurrentGuess((prev) => prev + letter);
+        }
       }
     }
   };
@@ -149,6 +169,8 @@ const useWordle = (solution) => {
     usedKeys,
     handleKeyup,
     history,
+    userInput,
+    setUserInput,
   };
 };
 
