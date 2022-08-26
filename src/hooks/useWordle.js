@@ -80,7 +80,7 @@ const useWordle = (solution) => {
 
   // handle keyup event & track current guess
   // if user presses enter, add the new guess
-  const handleKeyup = ({ key }) => {
+  const handleKeyup = ({ key, keyCode }) => {
     if (key === "Enter") {
       // only add guess if turn is less than 5
       if (turn > 5) {
@@ -134,14 +134,22 @@ const useWordle = (solution) => {
       setCurrentGuess((prev) => prev.slice(0, -1));
       return;
     }
-    if (/^[A-Za-z]$/.test(key)) {
+    if (/^[A-Za-z]$/.test(key) || (keyCode >= 65 && keyCode <= 90)) {
       if (currentGuess.length < 5) {
         setCurrentGuess((prev) => prev + key);
       }
     }
   };
 
-  return { turn, currentGuess, guesses, isCorrect, usedKeys, handleKeyup, history };
+  return {
+    turn,
+    currentGuess,
+    guesses,
+    isCorrect,
+    usedKeys,
+    handleKeyup,
+    history,
+  };
 };
 
 export default useWordle;
