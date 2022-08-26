@@ -29,7 +29,7 @@ export default function Wordle({ solution, wordleData }) {
   }
 
   useEffect(() => {
-    // window.addEventListener("keyup", handleKeyup);
+    window.addEventListener("keyup", handleKeyup);
 
     if (isCorrect) {
       setTimeout(() => setShowModal(true), 2000);
@@ -160,7 +160,6 @@ export default function Wordle({ solution, wordleData }) {
               autoFocus
               value={userInput}
               onChange={handleChange}
-              onKeyUp={handleKeyup}
               ref={startGameInput}
             />
             <Grid guesses={guesses} currentGuess={currentGuess} turn={turn} />
