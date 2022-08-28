@@ -267,7 +267,7 @@ if not DEBUG:
     DATABASES['default']['CONN_MAX_AGE'] = 600
     CORS_ALLOWED_ORIGINS = [
     "https://african3.herokuapp.com",
-    "https://african3.com/",
+    "https://african3.com",
 ]
 
 
