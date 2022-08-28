@@ -9,7 +9,7 @@ let baseURL;
 if (NODE_ENV === "development") {
   baseURL = "http://127.0.0.1:8000/api/";
 } else {
-  baseURL = "https://african3.herokuapp.com/api/";
+  baseURL = "https://african3.com/api/";
 }
 
 const user = localStorage.getItem("access_token")

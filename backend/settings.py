@@ -24,7 +24,7 @@ DEBUG = str(env('DEBUG'))=='1'
 SECRET_KEY = env('DJANGO_SECRET_KEY') or 'django-insecure-*1(z_n=g0=47qpkkd&t31+@$h$fxlms^%b#1=%o^op2qvkb592'
 
 ENV_ALLOWED_HOST = env('DJANGO_ALLOWED_HOST') or None
-ALLOWED_HOSTS =  ['african3.herokuapp.com']
+ALLOWED_HOSTS =  ['african3.herokuapp.com', 'african3.com',]
 if ENV_ALLOWED_HOST is not None:
     ALLOWED_HOSTS = [ ENV_ALLOWED_HOST ]
 
@@ -266,10 +266,8 @@ if not DEBUG:
     DATABASES['default'].update(db_from_env)
     DATABASES['default']['CONN_MAX_AGE'] = 600
     CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://localhost:8080",
-    "http://127.0.0.1:9000",
     "https://african3.herokuapp.com",
+    "https://african3.com/",
 ]
 
 
