@@ -50,6 +50,12 @@ export const register = (wallet_address) => {
       if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
+        if (
+          error.response.data?.wallet_address[0] ===
+          "custom user with this wallet address already exists."
+        ) {
+          login(wallet_address);
+        }
         console.log(error.response.data);
         console.log(error.response.status);
         console.log(error.response.headers);
