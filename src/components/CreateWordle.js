@@ -202,7 +202,7 @@ export default function CreateWordle({ show, setShow }) {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button variant="dark" onClick={handleShow}>
         Create Wordle
       </Button>
 
@@ -231,10 +231,10 @@ export default function CreateWordle({ show, setShow }) {
       />
 
       <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header>
+        <Modal.Header className="createmodal">
           <Modal.Title>Create a Wordle Game</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="createmodal">
           <Formik
             validationSchema={wordleSchema}
             onSubmit={(data) => handleQuizCreateForm(data)}
@@ -360,7 +360,7 @@ export default function CreateWordle({ show, setShow }) {
             )}
           </Formik>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="createmodal">
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>

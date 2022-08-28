@@ -786,6 +786,12 @@ nav.navbar .vvd {
   margin: 0;
 }
 
+.createmodal {
+  background: #242424;
+}
+.createmodal input {
+  background: linear-gradient(90.21deg, #bbdbbe -5.91%, #deebdd 111.58%);
+}
 /* keyframe animations */
 @keyframes flip {
   0% {
