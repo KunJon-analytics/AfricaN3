@@ -20,11 +20,7 @@ export const Footer = () => {
               >
                 <img src={navIcon1} alt="Icon" />
               </a>
-              <a
-                href="https://t.me/FoxyHunters"
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a href="https://t.me/african3" target="_blank" rel="noreferrer">
                 <img src={navIcon3} alt="Icon" />
               </a>
             </div>
