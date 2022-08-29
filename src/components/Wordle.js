@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import useWordle from "../hooks/useWordle";
 import CreateWordle from "./CreateWordle";
 import axiosInstance from "../api/axiosInstance";
+import { shortenAddress } from "../utils/shortenAddress";
 
 // components
 import Grid from "./Grid";
@@ -144,7 +145,7 @@ export default function Wordle({ solution, wordleData }) {
         <h2>{`Win ${reward.toFixed(2)} $GAS`}</h2>
         <p>
           {`Game title: ${wordleData.title}`}
-          <br></br> {`Master: ${wordleData.master}`}.
+          <br></br> {`Master: ${shortenAddress(wordleData.master)}`}.
         </p>
         {!showModal && (
           <>
