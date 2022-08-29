@@ -22,6 +22,7 @@ export default function Wordle({ solution, wordleData }) {
   } = useWordle(solution);
   const [showModal, setShowModal] = useState(false);
   const [show, setShow] = useState(false);
+  const reward = wordleData?.reward / wordleData?.no_of_words;
 
   useEffect(() => {
     window.addEventListener("keyup", handleKeyup);
@@ -140,7 +141,11 @@ export default function Wordle({ solution, wordleData }) {
   return (
     <section className="wordle" id="wordle">
       <div className="wordle-bx">
-        <h2>{`Win ${wordleData.reward / wordleData.no_of_words} $GAS`}</h2>
+        <h2>{`Win ${reward.toFixed(2)} $GAS`}</h2>
+        <p>
+          {`Game title: ${wordleData.title}`}
+          <br></br> {`Master: ${wordleData.master}`}.
+        </p>
         {!showModal && (
           <>
             <Grid guesses={guesses} currentGuess={currentGuess} turn={turn} />

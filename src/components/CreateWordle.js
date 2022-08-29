@@ -24,11 +24,11 @@ let wordleSchema = object({
   description: string().required().max(120),
   reward: number().required().positive().min(1),
   no_of_words: number()
-    .required()
+    .required("Number of rounds for the game is required")
     .positive()
     .integer()
-    .min(1, "At least one word is required for each agme")
-    .max(7, "The maximum number of words per game is 7"),
+    .min(1, "At least one round is required for each game")
+    .max(7, "The maximum number of rounds per game is 7"),
   search_twitter: string()
     .matches(
       /^[a-zA-Z0-9_#$]+$/,
@@ -309,7 +309,7 @@ export default function CreateWordle({ show, setShow }) {
                   className="mb-3"
                   controlId="validationFormikWordsNumber"
                 >
-                  <Form.Label>Number of Words</Form.Label>
+                  <Form.Label>Number of Rounds</Form.Label>
                   <InputGroup hasValidation>
                     <Form.Control
                       type="number"
@@ -325,7 +325,7 @@ export default function CreateWordle({ show, setShow }) {
                     </Form.Control.Feedback>
                   </InputGroup>
                   <Form.Text id="numberOfWordsHelpBlock" muted>
-                    The number of words in this game.
+                    The number of rounds in this game.
                   </Form.Text>
                 </Form.Group>
                 <Form.Group
