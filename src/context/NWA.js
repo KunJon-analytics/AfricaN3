@@ -3,7 +3,7 @@ import { WalletProvider } from "@rentfuse-labs/neo-wallet-adapter-react";
 import logo from "../assets/img/whitelogo.png";
 import {
   getNeoLineWallet,
-  // getOneGateWallet,
+  getOneGateWallet,
   // getWalletConnectWallet,
 } from "@rentfuse-labs/neo-wallet-adapter-wallets";
 import { WalletModalProvider } from "@rentfuse-labs/neo-wallet-adapter-react-ui";
@@ -15,7 +15,7 @@ const NWA = ({ children }) => {
   const getWallets = useMemo(() => {
     return [
       getNeoLineWallet(),
-      // getOneGateWallet(),
+      getOneGateWallet(),
       // getWalletConnectWallet({
       //   options: {
       //     chains: ["neo3:mainnet", "neo3:testnet"], // ['neo3:mainnet', 'neo3:testnet', 'neo3:private']

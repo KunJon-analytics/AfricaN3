@@ -712,6 +712,7 @@ nav.navbar .vvd {
 }
 .wordle .keypad > div {
   margin: 5px;
+  cursor: pointer;
   width: 35px;
   height: 45px;
   background: #242424;
@@ -738,6 +739,9 @@ nav.navbar .vvd {
   outline: none;
 }
 
+.wordle .keypad > div.action {
+  width: 65px;
+}
 .wordle .keypad > div.green {
   background: #5ac85a;
   color: #fff;

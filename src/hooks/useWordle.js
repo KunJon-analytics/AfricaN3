@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 
 const useWordle = (solution) => {
   const [turn, setTurn] = useState(0);
-  const [userInput, setUserInput] = useState("");
   const [currentGuess, setCurrentGuess] = useState("");
   const [guesses, setGuesses] = useState([...Array(6)]); // each guess is an array
   const [history, setHistory] = useState([]); // each guess is a string
@@ -81,14 +80,9 @@ const useWordle = (solution) => {
 
   // handle keyup event & track current guess
   // if user presses enter, add the new guess
-  var getKeyCode = function (str) {
-    return str.charCodeAt(str.length - 1);
-  };
-  var getlastChar = function (str) {
-    return str.slice(-1);
-  };
 
-  const handleKeyup = ({ key, keyCode, which }) => {
+  const handleClick = (alphabet) => {
+    const key = alphabet.target.innerText;
     if (key === "Enter") {
       // only add guess if turn is less than 5
       if (turn > 5) {
@@ -135,7 +129,65 @@ const useWordle = (solution) => {
         console.log("word must be 5 chars.");
         return;
       }
-      setUserInput("");
+      const formatted = formatGuess();
+      addNewGuess(formatted);
+    }
+    if (key === "Delete") {
+      setCurrentGuess((prev) => prev.slice(0, -1));
+      return;
+    }
+    if (currentGuess.length < 5) {
+      setCurrentGuess((prev) => prev + key);
+    }
+  };
+
+  const handleKeyup = ({ key }) => {
+    if (key === "Enter") {
+      // only add guess if turn is less than 5
+      if (turn > 5) {
+        toast.error("🦄 you used all your guesses!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        console.log("you used all your guesses!");
+        return;
+      }
+      // do not allow duplicate words
+      if (history.includes(currentGuess)) {
+        toast.error("🦄 you already tried that word!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        console.log("you already tried that word.");
+        return;
+      }
+      // check word is 5 chars
+      if (currentGuess.length !== 5) {
+        toast.error("🦄 word must be 5 chars!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        console.log("word must be 5 chars.");
+        return;
+      }
       const formatted = formatGuess();
       addNewGuess(formatted);
     }
@@ -143,21 +195,10 @@ const useWordle = (solution) => {
       setCurrentGuess((prev) => prev.slice(0, -1));
       return;
     }
-    // if (/^[A-Za-z]$/.test(key)) {
-    //   if (currentGuess.length < 5) {
-    //     setCurrentGuess((prev) => prev + key);
-    //     return;
-    //   }
-    // }
-    var kCd = keyCode || which;
-    if (kCd === 0 || kCd === 229) {
-      //for android chrome keycode fix
-      kCd = getKeyCode(userInput);
-    }
-    if (kCd >= 65 && kCd <= 90) {
+
+    if (/^[A-Za-z]$/.test(key)) {
       if (currentGuess.length < 5) {
-        var letter = getlastChar(userInput);
-        setCurrentGuess((prev) => prev + letter);
+        setCurrentGuess((prev) => prev + key);
       }
     }
   };
@@ -170,8 +211,7 @@ const useWordle = (solution) => {
     usedKeys,
     handleKeyup,
     history,
-    userInput,
-    setUserInput,
+    handleClick,
   };
 };
 
