@@ -93,6 +93,18 @@ export default function CreateWordle({ show, setShow }) {
       const result = await invoke(param);
 
       if (result.data?.txId) {
+        toast.info(
+          `🦄 Waiting for transaction confirmation, please stay on this page`,
+          {
+            position: "top-right",
+            autoClose: 25000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+          }
+        );
         console.log("sleeping...");
         setStage("blockchain");
         await helpers.sleep(25000);
