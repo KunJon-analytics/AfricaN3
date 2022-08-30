@@ -5,7 +5,7 @@ import "animate.css";
 import TrackVisibility from "react-on-screen";
 import { TypingComponent } from "./Typing";
 
-export const Banner = () => {
+export const Banner = ({ solution }) => {
   function NewTab() {
     window.open(
       "https://twitter.com/Africa_N3?t=_5zJpCZUotnMAhzYWbj7uw&s=08",
@@ -32,7 +32,11 @@ export const Banner = () => {
                       data-rotate='[ "the Smart Economy", "the Metaverse", "DeFi" ]'
                     >
                       <span className="wrap">
-                        <TypingComponent className="wrap" />
+                        {solution ? (
+                          <span className="wrap">the Smart Economy</span>
+                        ) : (
+                          <TypingComponent className="wrap" />
+                        )}
                       </span>{" "}
                     </span>
                   </h1>

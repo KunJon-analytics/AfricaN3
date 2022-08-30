@@ -112,7 +112,7 @@ function App() {
     <div className="App">
       <NavBar />
       <ToastContainer />
-      <Banner />
+      <Banner solution={solution} />
       {renderElement()}
       {solution && <Wordle solution={solution} wordleData={wordleData} />}
       <Projects />
