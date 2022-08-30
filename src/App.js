@@ -33,10 +33,31 @@ function App() {
       register(address);
     } else if (connected && address === user.wallet_address) {
       setSameWallet(true);
-    } else {
+    } else if (connected && address !== user.wallet_address) {
       setSameWallet(false);
       setSolution(null);
       // add popup to show the wallet is different
+      toast.warn("🦄 You are connecting with a different wallet address!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      setSameWallet(false);
+      setSolution(null);
+      toast.info("🦄 Connect your wallet to play wordle game!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   }, [connected, address, user]);
 
