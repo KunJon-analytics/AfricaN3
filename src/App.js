@@ -75,6 +75,20 @@ function App() {
           if (error.response) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
+            if (error.response.status === 429) {
+              toast.info("Come back tommorrow for another game round", {
+                position: "top-right",
+                autoClose: 3500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              });
+            }
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
             toast.error(error.response.data.detail, {
               position: "top-right",
               autoClose: 3500,
@@ -84,9 +98,6 @@ function App() {
               draggable: true,
               progress: undefined,
             });
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
           } else if (error.request) {
             // The request was made but no response was received
             // `error.request` is an instance of XMLHttpRequest in the browser and an instance of

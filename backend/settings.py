@@ -203,7 +203,8 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.ScopedRateThrottle',
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'game': '2/day'
+        'game': '2/day',
+        'submit': '1/day'
     }
 }
 

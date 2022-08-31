@@ -203,13 +203,7 @@ export const RewardWinners = ({ unpaid, setUnpaid }) => {
                     key={win.id}
                     className="item"
                     onClick={() =>
-                      sendTransaction(
-                        win.id,
-                        win.no_of_words,
-                        win.sittings,
-                        win.wordle_id,
-                        win.status
-                      )
+                      sendTransaction(win.id, win.sittings, win.wordle_id)
                     }
                   >
                     <img src={payment} alt="Unpaid winners" />

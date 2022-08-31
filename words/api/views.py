@@ -36,7 +36,7 @@ class WordTodayView(APIView):
         """
         Returns the word for the day.
         * Requires user to be authenticated.
-        * Can only be called once daily by a user
+        * Can only be called twice daily by a user
         """
         try:
             active_wordle_game = Wordle.objects.public().earliest()
@@ -57,7 +57,7 @@ class CreateSitting(APIView):
     * Can only be called once daily by a user
     """
     permission_classes = [IsAuthenticated]
-    throttle_scope = 'game'
+    throttle_scope = 'submit'
 
     def post(self, request):
         user = request.user.id

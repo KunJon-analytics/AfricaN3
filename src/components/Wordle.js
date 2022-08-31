@@ -58,20 +58,34 @@ export default function Wordle({ solution, wordleData }) {
             .post(`words/submit/`, formData)
             .then((res) => {
               console.log(res);
-              toast.success(`🦄 Your submission was successful`, {
-                position: "top-right",
-                autoClose: 8500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-              });
+              toast.success(
+                `🦄 Your submission was successful, come back tomorrow for another round`,
+                {
+                  position: "top-right",
+                  autoClose: 8500,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: false,
+                  draggable: true,
+                  progress: undefined,
+                }
+              );
             })
             .catch((error) => {
               if (error.response) {
                 // The request was made and the server responded with a status code
                 // that falls out of the range of 2xx
+                if (error.response.status === 429) {
+                  toast.info("Come back tommorrow for another game round", {
+                    position: "top-right",
+                    autoClose: 3500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                  });
+                }
                 toast.error(error.response.data.detail, {
                   position: "top-right",
                   autoClose: 3500,
