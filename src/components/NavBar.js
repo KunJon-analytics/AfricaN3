@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import logo from "../assets/img/whitelogo.png";
 import navIcon1 from "../assets/img/nav-icon1.svg";
+import navIcon2 from "../assets/img/nav-icon2.svg";
 import navIcon3 from "../assets/img/nav-icon3.svg";
 import ButtonConnect from "./ButtonConnect";
 
@@ -76,6 +77,13 @@ export const NavBar = () => {
                 rel="noreferrer"
               >
                 <img src={navIcon1} alt="twitter" />
+              </a>
+              <a
+                href="https://medium.com/@rmgura16"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img src={navIcon2} alt="medium" />
               </a>
               <a href="https://t.me/african3" target="_blank" rel="noreferrer">
                 <img src={navIcon3} alt="telegram" />

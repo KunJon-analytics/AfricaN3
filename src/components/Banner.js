@@ -8,7 +8,7 @@ import { TypingComponent } from "./Typing";
 export const Banner = ({ solution }) => {
   function NewTab() {
     window.open(
-      "https://twitter.com/Africa_N3?t=_5zJpCZUotnMAhzYWbj7uw&s=08",
+      "https://medium.com/@rmgura16/introducing-neo-wordle-d0b0c47b59d6",
       "_blank"
     );
   }
@@ -46,7 +46,7 @@ export const Banner = ({ solution }) => {
                     creators in the ecosystem.
                   </p>
                   <button onClick={() => NewTab()}>
-                    Let’s Connect <ArrowRightCircle size={25} />
+                    Play2Earn <ArrowRightCircle size={25} />
                   </button>
                 </div>
               )}
