@@ -146,7 +146,7 @@ function App() {
       <ToastContainer />
       <Banner solution={solution} />
       {renderElement()}
-      {solution && <Wordle solution={solution} wordleData={wordleData} />}
+      {sameWallet && <Wordle solution={solution} wordleData={wordleData} />}
       <Projects />
       <Footer />
     </div>

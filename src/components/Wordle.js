@@ -156,19 +156,27 @@ export default function Wordle({ solution, wordleData }) {
   return (
     <section className="wordle" id="wordle">
       <div className="wordle-bx">
-        <h2>{`Win ${reward.toFixed(2)} $GAS`}</h2>
-        <p>
-          {`Game title: ${wordleData.title}`}
-          <br></br> {`Master: ${shortenAddress(wordleData.master)}`}.
-        </p>
-        {!showModal && (
-          <>
-            <Grid guesses={guesses} currentGuess={currentGuess} turn={turn} />
-            <Keypad usedKeys={usedKeys} handleClick={handleClick} />
-          </>
-        )}
-        {showModal && (
-          <Modal isCorrect={isCorrect} turn={turn} solution={solution} />
+        {solution && (
+          <div>
+            <h2>{`Win ${reward.toFixed(2)} $GAS`}</h2>
+            <p>
+              {`Game title: ${wordleData.title}`}
+              <br></br> {`Master: ${shortenAddress(wordleData.master)}`}.
+            </p>
+            {!showModal && (
+              <>
+                <Grid
+                  guesses={guesses}
+                  currentGuess={currentGuess}
+                  turn={turn}
+                />
+                <Keypad usedKeys={usedKeys} handleClick={handleClick} />
+              </>
+            )}
+            {showModal && (
+              <Modal isCorrect={isCorrect} turn={turn} solution={solution} />
+            )}
+          </div>
         )}
         <CreateWordle show={show} setShow={setShow} />
       </div>
