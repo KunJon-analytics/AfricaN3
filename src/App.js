@@ -66,6 +66,20 @@ function App() {
       axiosInstance
         .get("words/")
         .then((res) => {
+          if (res.status === 204) {
+            toast.info(
+              "There is no active game right now, create a game to get AfricaN3 points",
+              {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              }
+            );
+          }
           if (res.data) {
             setWordleData(res.data);
             setSolution(res.data.word.content);
