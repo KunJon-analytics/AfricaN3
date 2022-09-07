@@ -46,7 +46,7 @@ export const Banner = ({ solution }) => {
                     creators in the ecosystem.
                   </p>
                   <button onClick={() => NewTab()}>
-                    Play2Earn <ArrowRightCircle size={25} />
+                    Learn More <ArrowRightCircle size={25} />
                   </button>
                 </div>
               )}
